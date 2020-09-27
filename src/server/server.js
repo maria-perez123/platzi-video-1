@@ -10,16 +10,16 @@ import { StaticRouter } from 'react-router-dom';
 import { renderRoutes } from 'react-router-config';
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
+import cookieParser from 'cookie-parser';
+import boom from '@hapi/boom';
+import passport from 'passport';
+import axios from 'axios';
 import reducer from '../frontend/reducers';
 import Layout from '../frontend/components/Layout';
 import initialState from '../frontend/initialState';
 import serverRoutes from '../frontend/routes/serverRoutes';
 import getManifest from './getManifest';
 
-import cookieParser from 'cookie-parser';
-import boom from '@hapi/boom';
-import passport from 'passport';
-import axios from 'axios';
 
 dotenv.config();
 
@@ -101,22 +101,22 @@ app.post("/auth/sign-in", async function (req, res, next) {
         next(boom.unauthorized());
       }
 
-      req.login(data, { session: false }, async function (error) {
-        if (error) {
-          next(error);
+      req.login(data, { session: false }, async function (err) {
+        if (err) {
+          next(err);
         }
 
         const { token, ...user } = data;
 
         res.cookie("token", token, {
-          httpOnly: !config.dev,
-          secure: !config.dev
+          httpOnly: !(ENV==='development'),
+          secure: !(ENV==='development')
         });
 
         res.status(200).json(user);
       });
-    } catch (error) {
-      next(error);
+    } catch (err) {
+      next(err);
     }
   })(req, res, next);
 });
@@ -125,13 +125,21 @@ app.post("/auth/sign-up", async function (req, res, next) {
   const { body: user } = req;
 
   try {
-    await axios({
-      url: `${config.apiUrl}/api/auth/sign-up`,
+    const userData = await axios({
+      url: `${process.env.API_URL}/api/auth/sign-up`,
       method: "post",
-      data: user
+      data:{
+        'email':user.email,
+        'name': user.name,
+        'password': user.password
+      }
     });
 
-    res.status(201).json({ message: "user created" });
+    res.status(201).json({
+      name: req.body.name,
+      email: req.body.email,
+      id:userData.data.id
+     });
   } catch (error) {
     next(error);
   }
