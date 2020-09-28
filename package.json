@@ -77,7 +77,7 @@
   },
   "jest": {
     "setupFilesAfterEnv": [
-      "<rootDir>/src/fronted/__test__/setupTest.js"
+      "<rootDir>/src/frontend/__test__/setupTest.js"
     ],
     "moduleNameMapper": {
       "\\.(jpg|jpeg|png|gif)$": "<rootDir>/src/frontend/__mocks__/fileMock.js",
