@@ -82,10 +82,9 @@ const renderApp = async (req, res) => {
 
   let initialState;
   const {token, email, name, id}= req.cookies;
-
   try{
-    const movieList= await axios({
-      url: `${process.env.API_URL}/api/moives`,
+    let movieList= await axios({
+      url: `${process.env.API_URL}/api/movies`,
       headers:{Authorization:`Bearer ${token}`},
       method:'get',
     });
