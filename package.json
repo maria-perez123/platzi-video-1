@@ -4,7 +4,7 @@
   "description": "React Base",
   "main": "src/server/index.js",
   "scripts": {
-    "build": "webpack-cli --config webpack.config.js --colors",
+    "build": "webpack webpack-cli --config webpack.config.js --colors",
     "lint": "eslint src/frontend --fix",
     "start": "node src/server/index.js",
     "start:dev": "nodemon src/server/index",
@@ -51,7 +51,7 @@
     "redux": "^4.0.5",
     "redux-thunk": "^2.3.0",
     "start": "^5.1.0",
-    "webpack": "^4.41.5",
+    "webpack": "^4.44.2",
     "webpack-cli": "^3.3.10",
     "webpack-dev-middleware": "^3.7.2",
     "webpack-dev-server": "^3.10.1",
