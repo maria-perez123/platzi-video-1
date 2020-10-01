@@ -2,7 +2,7 @@
   "name": "react-base",
   "version": "1.0.0",
   "description": "React Base",
-  "main": "src/server/index.js",
+  "main": "index.js",
   "scripts": {
     "build": "webpack webpack-cli --config webpack.config.js --colors",
     "lint": "eslint src/frontend --fix",
